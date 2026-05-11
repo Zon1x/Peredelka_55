@@ -1,0 +1,99 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}{{ portfolio_item.title }}{% if site_settings %} | {{ site_settings.site_name }}{% endif %}{% endblock %}
+{% block meta_description %}{{ portfolio_item.description|truncatechars:160 }}{% endblock %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/Swiper/8.4.7/swiper-bundle.min.css">
+{% endblock %}
+
+{% block content %}
+<div class="container portfolio-detail-page">
+    <div class="breadcrumb">
+        <a href="{% url 'portfolio:portfolio_list' %}">Наши работы</a> / {{ portfolio_item.title }}
+    </div>
+
+    <div class="page-header">
+        <h1>{{ portfolio_item.title }}</h1>
+    </div>
+
+    <div class="project-gallery">
+        <div class="swiper mySwiper">
+            <div class="swiper-wrapper">
+                <div class="swiper-slide">
+                    <img src="{% if portfolio_item.before_image %}{{ portfolio_item.before_image.url }}{% else %}{% static 'img/zaglushka_portfolio_do_posle.svg' %}{% endif %}" alt="{{ portfolio_item.title }} — до" loading="lazy" decoding="async">
+                    <p class="image-caption">ДО</p>
+                </div>
+                <div class="swiper-slide">
+                    <img src="{% if portfolio_item.after_image %}{{ portfolio_item.after_image.url }}{% else %}{% static 'img/zaglushka_portfolio_do_posle.svg' %}{% endif %}" alt="{{ portfolio_item.title }} — после" loading="lazy" decoding="async">
+                    <p class="image-caption">ПОСЛЕ</p>
+                </div>
+            </div>
+            <div class="swiper-button-next"></div>
+            <div class="swiper-button-prev"></div>
+            <div class="swiper-pagination"></div>
+        </div>
+    </div>
+
+    <div class="project-details-block">
+        <div class="project-description">
+            <h2>Описание проекта</h2>
+            <p>{{ portfolio_item.description|safe }}</p>
+        </div>
+
+        <div class="technical-details">
+            <h2>Технические детали</h2>
+            {% if portfolio_item.category %}
+            <p><strong>Категория:</strong> {{ portfolio_item.category.name }}</p>
+            {% endif %}
+            {% if portfolio_item.chassis_type %}
+            <p><strong>Тип шасси:</strong> {{ portfolio_item.chassis_type }}</p>
+            {% endif %}
+            <p><strong>Дата завершения:</strong> {{ portfolio_item.completion_date|date:"d.m.Y" }}</p>
+            {% if portfolio_item.price_display %}
+            <p><strong>Цена:</strong> {{ portfolio_item.price_display }}</p>
+            {% endif %}
+            {% if portfolio_item.equipment_summary %}
+            <p><strong>Оборудование:</strong><br>{{ portfolio_item.equipment_summary|linebreaksbr }}</p>
+            {% endif %}
+            {% if portfolio_item.services_used.exists %}
+            <p><strong>Использованные услуги:</strong></p>
+            <ul>
+                {% for service in portfolio_item.services_used.all %}
+                    <li><a href="{% url 'services:service_detail' service.pk %}">{{ service.name }}</a></li>
+                {% endfor %}
+            </ul>
+            {% endif %}
+            {# TODO: Add Features/Characteristics if needed in model #}
+        </div>
+    </div>
+
+    <div class="client-reviews-block">
+        <h2>Отзывы клиентов о проекте</h2>
+        {% comment %}
+            Здесь будут отображаться отзывы, связанные с этим проектом.
+            Для этого потребуется добавить связь между моделями PortfolioItem и Review.
+        {% endcomment %}
+        <p>Отзывы по этому проекту пока отсутствуют. Будьте первыми!</p>
+        <a href="{% url 'reviews:add_review' %}" class="btn btn-primary">Оставить отзыв</a>
+    </div>
+
+</div>
+{% endblock %}
+
+{% block extra_js %}
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Swiper/8.4.7/swiper-bundle.min.js"></script>
+<script>
+    var swiper = new Swiper(".mySwiper", {
+        navigation: {
+            nextEl: ".swiper-button-next",
+            prevEl: ".swiper-button-prev",
+        },
+        pagination: {
+            el: ".swiper-pagination",
+            clickable: true,
+        },
+    });
+</script>
+{% endblock %}

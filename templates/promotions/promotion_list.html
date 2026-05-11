@@ -1,0 +1,33 @@
+{% extends 'base.html' %}
+
+{% block title %}Акции и бонусы{% if site_settings %} | {{ site_settings.site_name }}{% endif %}{% endblock %}
+{% block meta_description %}Акции, бонусы за отзывы и спецпредложения.{% endblock %}
+
+{% block content %}
+<div class="container promotion-list-page">
+    <div class="page-header">
+        <h1>Акции и бонусы</h1>
+        <p class="page-intro">Участвуйте в акциях: бонусы за отзывы, розыгрыши призов при заказе комплекта работ.</p>
+    </div>
+
+    <div class="promotions-grid">
+        {% for p in promotions %}
+        <article class="promotion-card">
+            <h2><a href="{{ p.get_absolute_url }}">{{ p.title }}</a></h2>
+            {% if p.bonus_summary %}<p class="promotion-bonus">{{ p.bonus_summary }}</p>{% endif %}
+            {% if p.teaser %}<p>{{ p.teaser|truncatewords:40 }}</p>{% endif %}
+            <p class="promotion-dates muted">
+                {% if p.start_date %}с {{ p.start_date|date:"d.m.Y" }}{% endif %}
+                {% if p.end_date %} по {{ p.end_date|date:"d.m.Y" }}{% endif %}
+            </p>
+            <a href="{{ p.get_absolute_url }}" class="btn btn-primary btn-sm">Подробнее</a>
+        </article>
+        {% empty %}
+        <div class="empty-state">
+            <p>Сейчас нет активных акций — загляните позже или уточните у менеджеров по телефону.</p>
+            <a href="{% url 'contact_form' %}" class="btn btn-primary btn-sm">Связаться с менеджером</a>
+        </div>
+        {% endfor %}
+    </div>
+</div>
+{% endblock %}

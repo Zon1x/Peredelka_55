@@ -1,0 +1,15 @@
+{% extends 'base.html' %}
+
+{% block title %}Заявка отправлена{% if site_settings %} | {{ site_settings.site_name }}{% endif %}{% endblock %}
+{% block meta_description %}Ваша заявка успешно отправлена.{% endblock %}
+
+{% block content %}
+<div class="container contact-success-page">
+    <h1>Спасибо за вашу заявку!</h1>
+    <p>Мы получили ваше сообщение и свяжемся с вами в ближайшее время.</p>
+    <div class="cta-actions">
+        <a href="{% url 'core:index' %}" class="btn btn-primary">Вернуться на главную</a>
+        <a href="{% url 'services:service_list' %}" class="btn btn-outline-dark">Посмотреть услуги</a>
+    </div>
+</div>
+{% endblock %}

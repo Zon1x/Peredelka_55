@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Новая заявка на контакт</title>
+    <style>
+        body { font-family: Arial, sans-serif; line-height: 1.6; color: #333; }
+        .container { width: 80%; margin: 20px auto; padding: 20px; border: 1px solid #ddd; border-radius: 8px; background-color: #f9f9f9; }
+        h2 { color: #0056b3; }
+        ul { list-style: none; padding: 0; }
+        ul li { margin-bottom: 10px; }
+        .footer { margin-top: 20px; font-size: 0.9em; color: #777; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h2>Новая заявка на контакт с сайта Peredelka55</h2>
+        <p>Поступила новая заявка на контакт со следующими данными:</p>
+        <ul>
+            <li><strong>Имя:</strong> {{ contact_request.name }}</li>
+            <li><strong>Телефон:</strong> {{ contact_request.phone|default:"Не указан" }}</li>
+            <li><strong>Email:</strong> {{ contact_request.email|default:"Не указан" }}</li>
+            <li><strong>Услуга:</strong> {{ contact_request.service|default:"Не выбрана" }}</li>
+            <li><strong>Сообщение:</strong> {{ contact_request.message|default:"Нет сообщения" }}</li>
+            <li><strong>Дата и время:</strong> {{ contact_request.created_at|date:"d.m.Y H:i" }}</li>
+        </ul>
+        <p>Пожалуйста, обработайте эту заявку в административной панели.</p>
+        <div class="footer">
+            <p>Это автоматическое уведомление. Пожалуйста, не отвечайте на него.</p>
+        </div>
+    </div>
+</body>
+</html>

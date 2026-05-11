@@ -1,0 +1,33 @@
+# 1) Перейти в папку проекта
+cd "C:\Users\vladg\Desktop\ДИПЛОМ\Peredelka55"
+
+# 2) Активировать venv (если нужно)
+.\venv\Scripts\Activate.ps1
+
+# 3) Запустить сервер
+python manage.py runserver
+
+Открыть в браузере:
+
+http://127.0.0.1:8000
+Остановить сервер:
+
+в терминале нажать Ctrl + C.
+Если запускаешь впервые и не стартует из‑за зависимостей, добавь перед запуском:
+
+
+pip install -r requirements.txt
+python manage.py migrate
+
+
+Админ-панель
+
+Перейти в папку проекта (у вас это Peredelka55 на рабочем столе).
+
+Запустить Python из виртуального окружения (если Activate.ps1 у вас блокируется политикой PowerShell, активация не обязательна — главное вызывать venv\Scripts\python.exe):
+
+cd "C:\Users\vladg\Desktop\ДИПЛОМ\Peredelka55"
+.\venv\Scripts\python.exe manage.py runserver
+Открыть в браузере http://127.0.0.1:8000/admin/.
+
+Остановить сервер: в том же окне терминала Ctrl+C.

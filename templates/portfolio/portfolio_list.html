@@ -1,0 +1,39 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Наши работы{% if site_settings %} | {{ site_settings.site_name }}{% endif %}{% endblock %}
+{% block meta_description %}Портфолио: удлинение рамы, еврофургон, техосмотр и ремонт рамы — примеры проектов.{% endblock %}
+
+{% block content %}
+<div class="container portfolio-list-page">
+    <div class="page-header">
+        <h1>Наши работы</h1>
+        <p class="page-intro">
+            Фильтр по направлениям ограничен четырьмя темами, которые мы реально выполняем на производстве.
+            Категории вне этого списка на сайте не отображаются — так проще ориентироваться заказчику по типу задачи.
+        </p>
+    </div>
+
+    <div class="portfolio-filters">
+        <div class="categories-filter categories-filter--tight">
+            <a href="{% url 'portfolio:portfolio_list' %}" class="btn {% if not selected_category %}btn-active{% endif %}">Все работы</a>
+            {% for category in categories %}
+                <a href="{% url 'portfolio:portfolio_list_by_category' category.slug %}" class="btn {% if selected_category and selected_category.slug == category.slug %}btn-active{% endif %}">{{ category.name }}</a>
+            {% endfor %}
+        </div>
+    </div>
+
+    <div class="portfolio-grid">
+        {% for item in portfolio_cards %}
+        <div class="portfolio-card">
+            <img src="{% if item.after_image %}{{ item.after_image.url }}{% elif item.before_image %}{{ item.before_image.url }}{% elif item.image_url %}{{ item.image_url }}{% else %}{% static 'img/zaglushka_portfolio_do_posle.svg' %}{% endif %}" alt="{{ item.title }}" loading="lazy" decoding="async">
+            <div class="card-overlay">
+                <h3>{{ item.title }}</h3>
+                <p>{% if item.category %}{{ item.category.name }}{% elif item.category_name %}{{ item.category_name }}{% endif %} · {% if item.completion_date %}{{ item.completion_date|date:"Y" }}{% else %}{{ item.year }}{% endif %}{% if item.price_display %} · {{ item.price_display }}{% endif %}</p>
+                <a href="{% if item.pk %}{% url 'portfolio:portfolio_detail' item.pk %}{% else %}{% url 'portfolio:portfolio_list' %}{% endif %}" class="btn btn-sm">Подробнее</a>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+</div>
+{% endblock %}

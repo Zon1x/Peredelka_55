@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <title>Новый отзыв ожидает модерации</title>
+</head>
+<body>
+    <h1>Новый отзыв на сайте Peredelka55</h1>
+    <p>На сайте был добавлен новый отзыв, который ожидает вашей модерации:</p>
+
+    <h2>Детали отзыва:</h2>
+    <ul>
+        <li><strong>Автор:</strong> {{ review.author_name }}</li>
+        {% if review.author_position %}
+            <li><strong>Должность/Компания:</strong> {{ review.author_position }}</li>
+        {% endif %}
+        <li><strong>Тип услуги:</strong> {{ review.get_service_type_display }}</li>
+        <li><strong>Оценка:</strong> {{ review.rating }} звезд</li>
+        <li><strong>Текст отзыва:</strong><br>{{ review.text|linebreaksbr }}</li>
+        <li><strong>Дата и время отправки:</strong> {{ review.created_at|date:"d.m.Y H:i" }}</li>
+    </ul>
+
+    <p>Пожалуйста, перейдите в админ-панель для просмотра и модерации отзыва:</p>
+    <p><a href="/admin/reviews/review/{{ review.pk }}/change/">Ссылка на отзыв в админ-панели</a></p>
+
+    <p>С уважением,<br>Администрация Peredelka55</p>
+</body>
+</html>

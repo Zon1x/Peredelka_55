@@ -1,0 +1,63 @@
+{% extends 'base.html' %}
+
+{% block title %}Отзывы{% if site_settings %} | {{ site_settings.site_name }}{% endif %}{% endblock %}
+{% block meta_description %}Отзывы наших клиентов о работе Peredelka55.{% endblock %}
+
+{% block content %}
+<div class="container review-list-page">
+    <div class="page-header">
+        <h1>Отзывы наших клиентов</h1>
+        <p class="page-intro">
+            Здесь собраны отзывы по четырём направлениям: удлинение рамы, еврофургон, подготовка к техосмотру и ремонт рамы.
+            Мы не публикуем анонимные или неподтверждённые тексты — каждая запись проходит ручную проверку.
+        </p>
+    </div>
+
+    <p class="review-moderation-note">Новые отзывы проходят модерацию: после проверки они появляются в этом списке.</p>
+
+    <div class="review-stats">
+        <p>Опубликованных отзывов: <strong>{{ reviews_total }}</strong></p>
+        {% if avg_rating %}
+        <p>Средняя оценка: <strong>{{ avg_rating }}</strong> из 5</p>
+        {% endif %}
+    </div>
+
+    <div class="reviews-grid">
+        {% for review in reviews %}
+        <div class="review-card">
+            <div class="author-info">
+                <div class="avatar"><i class="fas fa-user-circle"></i></div>
+                <div class="details">
+                    <h3>{{ review.author_name }}</h3>
+                    {% if review.author_position %}
+                        <p class="position">{{ review.author_position }}</p>
+                    {% endif %}
+                    <p class="review-service-type">{{ review.get_service_type_display }}</p>
+                </div>
+            </div>
+            <div class="rating" aria-label="Оценка {{ review.rating }} из 5">
+                {% for i in "12345"|make_list %}
+                    {% if forloop.counter <= review.rating %}
+                        <i class="fas fa-star" aria-hidden="true"></i>
+                    {% else %}
+                        <i class="far fa-star" aria-hidden="true"></i>
+                    {% endif %}
+                {% endfor %}
+            </div>
+            <p class="review-text">{{ review.text }}</p>
+            <p class="review-date">{{ review.created_at|date:"d.m.Y" }}</p>
+        </div>
+        {% empty %}
+            <div class="empty-state">
+                <p>Отзывов пока нет. Будьте первым, кто поделится впечатлением о работе.</p>
+                <a href="{% url 'reviews:add_review' %}" class="btn btn-primary btn-sm">Оставить отзыв</a>
+            </div>
+        {% endfor %}
+    </div>
+
+    <div class="add-review-cta">
+        <h2>Оставьте свой отзыв</h2>
+        <a href="{% url 'reviews:add_review' %}" class="btn btn-primary">Написать отзыв</a>
+    </div>
+</div>
+{% endblock %}

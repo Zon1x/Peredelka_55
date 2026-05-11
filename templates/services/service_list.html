@@ -1,0 +1,45 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Услуги{% if site_settings %} | {{ site_settings.site_name }}{% endif %}{% endblock %}
+{% block meta_description %}{% if site_settings %}{{ site_settings.default_meta_description }}{% endif %}{% endblock %}
+
+{% block content %}
+<div class="container service-list-page">
+    <div class="page-header">
+        <h1>Услуги</h1>
+        <p class="page-intro">
+            Полный перечень направлений на одной странице — четыре позиции: <strong>удлинение рамы</strong>,
+            <strong>еврофургон</strong>, <strong>техосмотр</strong> и <strong>ремонт рамы</strong>.
+            Категории и поиск по ним отключены: откройте карточку «Подробнее», чтобы ознакомиться с этапами,
+            гарантиями и ориентиром по цене «от». Итоговая сумма фиксируется после осмотра шасси.
+        </p>
+    </div>
+
+    <div class="services-intro-strip" role="presentation">
+        {% for name in fixed_service_names %}
+        <span class="services-intro-strip__item">{{ name }}</span>
+        {% endfor %}
+    </div>
+
+    <div class="services-grid services-grid--flat">
+        {% for service in services %}
+        <div class="service-card service-card--modern">
+            <img src="{% if service.image %}{{ service.image.url }}{% else %}{{ service.topic_image_url }}{% endif %}" alt="{{ service.name }}" loading="lazy" decoding="async">
+            <div class="service-card__body">
+                <h3>{{ service.name }}</h3>
+                <div class="service-card__snippet">{{ service.description|striptags|truncatechars:220 }}</div>
+                {% if service.price_from %}
+                    <p class="service-card__price">от {{ service.price_from|floatformat:0 }} ₽</p>
+                {% endif %}
+                <a href="{% url 'services:service_detail' service.pk %}" class="btn btn-primary btn-sm">Подробнее</a>
+            </div>
+        </div>
+        {% empty %}
+            <div class="empty-state">
+                <p>Услуги загружаются из базы. Выполните миграции (<code class="muted">manage.py migrate</code>) или обратитесь к администратору сайта.</p>
+            </div>
+        {% endfor %}
+    </div>
+</div>
+{% endblock %}

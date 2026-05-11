@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <title>Ваша заявка принята - {% if site_settings %}{{ site_settings.site_name }}{% else %}Peredelka55{% endif %}</title>
+</head>
+<body>
+    <h1>Здравствуйте, {{ contact_request.name }}!</h1>
+    <p>Мы получили вашу заявку на сайте {% if site_settings %}{{ site_settings.site_name }}{% else %}Peredelka55{% endif %} и скоро свяжемся с вами.</p>
+
+    <h2>Детали вашей заявки:</h2>
+    <ul>
+        {% if contact_request.phone %}
+            <li><strong>Телефон:</strong> {{ contact_request.phone }}</li>
+        {% endif %}
+        {% if contact_request.email %}
+            <li><strong>Email:</strong> {{ contact_request.email }}</li>
+        {% endif %}
+        {% if contact_request.service %}
+            <li><strong>Услуга:</strong> {{ contact_request.service.name }}</li>
+        {% endif %}
+        {% if contact_request.message %}
+            <li><strong>Сообщение:</strong><br>{{ contact_request.message|linebreaksbr }}</li>
+        {% endif %}
+    </ul>
+
+    <p>С уважением,<br>{% if site_settings %}{{ site_settings.company_name }}{% else %}Команда Peredelka55{% endif %}</p>
+    <p><small>Это автоматическое сообщение, пожалуйста, не отвечайте на него.</small></p>
+</body>
+</html>

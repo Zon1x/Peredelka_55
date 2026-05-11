@@ -1,0 +1,7 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 220 44" fill="none" role="img" aria-labelledby="logoTitle">
+  <title id="logoTitle">Переделка 55</title>
+  <rect width="220" height="44" rx="10" fill="#111318"/>
+  <rect x="5" y="5" width="50" height="34" rx="7" fill="#e45812"/>
+  <text x="30" y="30" text-anchor="middle" fill="#fff" font-size="17" font-family="system-ui,Segoe UI,sans-serif" font-weight="700">55</text>
+  <text x="66" y="29" fill="#fff" font-size="15" font-family="system-ui,Segoe UI,sans-serif" font-weight="700">Переделка</text>
+</svg>

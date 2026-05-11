@@ -1,0 +1,40 @@
+{% extends 'base.html' %}
+
+{% block title %}Отзывы клиентов{% endblock %}
+
+{% block content %}
+<div class="container my-5">
+    <h1 class="text-center mb-4">Отзывы наших клиентов</h1>
+
+    <div class="row">
+        <div class="col-md-8 offset-md-2">
+            {% if reviews %}
+            {% for review in reviews %}
+            <div class="card mb-3">
+                <div class="card-body">
+                    <h5 class="card-title">{{ review.author_name }} {% if review.author_position %}<small
+                            class="text-muted">({{ review.author_position }})</small>{% endif %}</h5>
+                    <p class="card-text">{{ review.text }}</p>
+                    <div class="text-warning">
+                        {% for i in "12345"|make_list %}
+                        {% if forloop.counter <= review.rating %} <i class="fas fa-star"></i>
+                            {% else %}
+                            <i class="far fa-star"></i>
+                            {% endif %}
+                            {% endfor %}
+                    </div>
+                    <p class="card-text"><small class="text-muted">Опубликовано: {{ review.created_at|date:"d.m.Y"
+                            }}</small></p>
+                </div>
+            </div>
+            {% endfor %}
+            {% else %}
+            <p class="text-center">Пока нет опубликованных отзывов.</p>
+            {% endif %}
+            <div class="text-center mt-4">
+                <a href="{% url 'reviews:add_review' %}" class="btn btn-primary">Оставить отзыв</a>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

@@ -1,0 +1,14 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 500" fill="none">
+  <defs>
+    <linearGradient id="g" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#eef0f3"/>
+      <stop offset="100%" stop-color="#dee2e6"/>
+    </linearGradient>
+  </defs>
+  <rect width="800" height="500" fill="url(#g)"/>
+  <path fill="#c5cad3" d="M120 320h520v40H120v-40zm40-140h440l60 140H160l-40-140z"/>
+  <circle cx="220" cy="360" r="36" fill="#9aa3ad"/>
+  <circle cx="580" cy="360" r="36" fill="#9aa3ad"/>
+  <rect x="260" y="200" width="280" height="100" rx="8" fill="#b8c0ca"/>
+  <text x="400" y="460" text-anchor="middle" fill="#7a828c" font-size="28" font-family="system-ui,sans-serif">Услуга</text>
+</svg>

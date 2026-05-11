@@ -1,0 +1,69 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}{{ service.name }}{% if site_settings %} | {{ site_settings.site_name }}{% endif %}{% endblock %}
+{% block meta_description %}{{ service.description|truncatechars:160 }}{% endblock %}
+
+{% block content %}
+<div class="container service-detail-page">
+    <div class="breadcrumb">
+        <a href="{% url 'services:service_list' %}">Услуги</a> / {{ service.name }}
+    </div>
+
+    <div class="page-header">
+        <h1>{{ service.name }}</h1>
+    </div>
+
+    <div class="service-main-info">
+        {% with n=service.name|lower %}
+        <img src="{% if service.image %}{{ service.image.url }}{% elif 'удлинение' in n %}{% static 'img/udlinenie_ramy.svg' %}{% elif 'евро' in n %}{% static 'img/evrofurgon.svg' %}{% elif 'техосмотр' in n %}{% static 'img/tehosmotr.svg' %}{% elif 'ремонт' in n %}{% static 'img/remont_ramy.svg' %}{% else %}{% static 'img/zaglushka_uslugi.svg' %}{% endif %}" alt="{{ service.name }}" class="service-main-image" loading="lazy" decoding="async">
+        {% endwith %}
+        <div class="service-description">
+            <p>{{ service.description|safe }}</p>
+            <p class="muted">
+                На этой странице собрана расширенная информация по выбранному направлению. Если чего-то не хватает
+                (например, фото именно вашего типа шасси), пришлите запрос через форму контактов — подготовим
+                ответ по телефону или письмом.
+            </p>
+        </div>
+    </div>
+
+    <div class="service-placeholder-gallery" aria-label="Иллюстрации-заглушки">
+        <img src="{% static 'img/proizvodstvennaya_zona.svg' %}" alt="" loading="lazy" width="400" height="250">
+        <img src="{% static 'img/zaglushka_portfolio_do_posle.svg' %}" alt="" loading="lazy" width="400" height="250">
+        <img src="{% static 'img/zaglushka_uslugi.svg' %}" alt="" loading="lazy" width="400" height="250">
+    </div>
+
+    <div class="service-details-block">
+        <div class="price-and-terms">
+            <h2>Цена и сроки</h2>
+            {% if service.price_from %}
+                <p><strong>Цена от:</strong> {{ service.price_from }} руб.</p>
+            {% else %}
+                <p><strong>Цена:</strong> По запросу</p>
+            {% endif %}
+            {% if service.terms %}
+                <p><strong>Срок выполнения:</strong> {{ service.terms|linebreaksbr }}</p>
+            {% endif %}
+            {% if service.guarantee %}
+                <p><strong>Гарантия:</strong> {{ service.guarantee|linebreaksbr }}</p>
+            {% endif %}
+            <p><strong>Выезд специалиста:</strong> {% if service.specialist_visit %}Доступно{% else %}Недоступно{% endif %}</p>
+            <a href="{% url 'contact_form' %}" class="btn btn-primary">Заказать услугу</a>
+        </div>
+
+        <div class="process-of-work">
+            <h2>Процесс работы</h2>
+            {% if service.work_process %}
+                <p>{{ service.work_process|linebreaksbr }}</p>
+            {% else %}
+                <p>Информация о процессе работы скоро появится.</p>
+            {% endif %}
+            <a href="{% url 'portfolio:portfolio_list' %}" class="btn btn-outline-dark">Посмотреть похожие проекты</a>
+        </div>
+    </div>
+
+    {# TODO: Add Related Services Block #}
+
+</div>
+{% endblock %}

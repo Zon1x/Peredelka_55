@@ -1,0 +1,17 @@
+{% extends 'base.html' %}
+
+{% block title %}Ошибка сервера{% endblock %}
+
+{% block content %}
+<div class="container error-page">
+    <div class="page-header">
+        <h1>500</h1>
+        <p class="page-intro">Возникла внутренняя ошибка. Попробуйте обновить страницу чуть позже.</p>
+    </div>
+    <p>Произошла внутренняя ошибка сервера. Мы уже работаем над ее устранением.</p>
+    <div class="cta-actions">
+        <a href="{% url 'core:index' %}" class="btn btn-primary">Перейти на главную</a>
+        <a href="{% url 'contact_form' %}" class="btn btn-outline-dark">Связаться с нами</a>
+    </div>
+</div>
+{% endblock %}

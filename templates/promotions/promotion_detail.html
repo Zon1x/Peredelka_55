@@ -1,0 +1,45 @@
+{% extends 'base.html' %}
+
+{% block title %}{{ promotion.title }}{% if site_settings %} | {{ site_settings.site_name }}{% endif %}{% endblock %}
+{% block meta_description %}{{ promotion.teaser|default:promotion.title|truncatechars:155 }}{% endblock %}
+
+{% block content %}
+<div class="container promotion-detail-page">
+    <nav class="breadcrumb"><a href="{% url 'promotions:promotion_list' %}">Акции</a> / {{ promotion.title }}</nav>
+    <div class="page-header">
+        <h1>{{ promotion.title }}</h1>
+    </div>
+    {% if promotion.bonus_summary %}<p class="promotion-bonus promotion-bonus--large">{{ promotion.bonus_summary }}</p>{% endif %}
+
+    <div class="promotion-body">
+        {{ promotion.description|linebreaks }}
+    </div>
+
+    {% if promotion.conditions %}
+    <h2>Условия участия</h2>
+    <div class="promotion-conditions">{{ promotion.conditions|linebreaks }}</div>
+    {% endif %}
+
+    {% if promotion.how_to_get %}
+    <h2>Как получить бонус</h2>
+    <div>{{ promotion.how_to_get|linebreaks }}</div>
+    {% endif %}
+
+    <section class="promotion-submit-block">
+        <h2>Отправить ссылку на отзыв</h2>
+        <p>Если вы участвуете в акции за отзыв на Яндекс.Картах, YouTube или ВК — укажите ссылку на публикацию.</p>
+        {% if messages %}
+        <ul class="messages">
+            {% for m in messages %}
+            <li class="{{ m.tags }}">{{ m }}</li>
+            {% endfor %}
+        </ul>
+        {% endif %}
+        <form method="post" class="review-link-form contact-form">
+            {% csrf_token %}
+            {{ form.as_p }}
+            <button type="submit" class="btn btn-primary">Отправить</button>
+        </form>
+    </section>
+</div>
+{% endblock %}

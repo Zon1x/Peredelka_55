@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <title>Новая заявка на контакт</title>
+</head>
+<body>
+    <h1>Новая заявка на контакт</h1>
+    <p>Получена новая заявка через форму обратной связи на сайте.</p>
+
+    <ul>
+        <li><strong>Имя:</strong> {{ contact_request.name }}</li>
+        {% if contact_request.phone %}
+            <li><strong>Телефон:</strong> {{ contact_request.phone }}</li>
+        {% endif %}
+        {% if contact_request.email %}
+            <li><strong>Email:</strong> {{ contact_request.email }}</li>
+        {% endif %}
+        {% if contact_request.service %}
+            <li><strong>Услуга:</strong> {{ contact_request.service.name }}</li>
+        {% endif %}
+        {% if contact_request.vehicle_type %}
+            <li><strong>Тип авто / услуга:</strong> {{ contact_request.vehicle_type }}</li>
+        {% endif %}
+        {% if contact_request.message %}
+            <li><strong>Сообщение:</strong><br>{{ contact_request.message|linebreaksbr }}</li>
+        {% endif %}
+        <li><strong>Дата и время:</strong> {{ contact_request.created_at|date:"d.m.Y H:i" }}</li>
+    </ul>
+
+    <p>Для просмотра заявки перейдите в <a href="/admin/contacts/contactrequest/{{ contact_request.pk }}/change/">админ-панель</a>.</p>
+</body>
+</html>

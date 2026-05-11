@@ -1,0 +1,45 @@
+{% extends 'base.html' %}
+
+{% block title %}{{ portfolio_item.title }}{% endblock %}
+
+{% block content %}
+<div class="container my-5">
+    <div class="row">
+        <div class="col-md-8 offset-md-2">
+            <h1 class="mb-4">{{ portfolio_item.title }}</h1>
+            <p class="text-muted">Категория: {{ portfolio_item.category }} | Дата завершения: {{
+                portfolio_item.completion_date|date:"d.m.Y" }}</p>
+
+            <div class="row mb-4">
+                <div class="col-md-6">
+                    <h5>До:</h5>
+                    {% if portfolio_item.before_image %}
+                    <img src="{{ portfolio_item.before_image.url }}" class="img-fluid"
+                        alt="{{ portfolio_item.title }} - До">
+                    {% endif %}
+                </div>
+                <div class="col-md-6">
+                    <h5>После:</h5>
+                    {% if portfolio_item.after_image %}
+                    <img src="{{ portfolio_item.after_image.url }}" class="img-fluid"
+                        alt="{{ portfolio_item.title }} - После">
+                    {% endif %}
+                </div>
+            </div>
+
+            <p class="lead">{{ portfolio_item.description }}</p>
+
+            {% if portfolio_item.services_used.all %}
+            <h5>Использованные услуги:</h5>
+            <ul>
+                {% for service in portfolio_item.services_used.all %}
+                <li><a href="{% url 'services:service_detail' pk=service.pk %}">{{ service.name }}</a></li>
+                {% endfor %}
+            </ul>
+            {% endif %}
+
+            <a href="{% url 'portfolio:portfolio_list' %}" class="btn btn-secondary mt-3">К портфолио</a>
+        </div>
+    </div>
+</div>
+{% endblock %}

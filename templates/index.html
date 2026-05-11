@@ -1,0 +1,367 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}{% if site_settings %}{{ site_settings.default_meta_title }}{% endif %}{% endblock %}
+{% block meta_description %}{% if site_settings %}{{ site_settings.default_meta_description }}{% endif %}{% endblock %}
+
+{% block content %}
+<section class="hero-section">
+    <div class="container hero-inner">
+        <p class="hero-eyebrow">7 лет на рынке · более 1000 проектов в Омске · четыре специализации</p>
+        <h1>Полный цикл работ с рамой и фургоном коммерческого транспорта</h1>
+        <p class="hero-lead">
+            Мы занимаемся только четырьмя направлениями: <strong>удлинение рамы</strong>, <strong>еврофургон</strong>,
+            <strong>техосмотр</strong> (подготовка и сопровождение) и <strong>ремонт рамы</strong>.
+            От первичной консультации и осмотра на территории заказчика до сдачи автомобиля с понятной сметой,
+            фиксированными этапами и рекомендациями по дальнейшей эксплуатации. Работаем с лёгким коммерческим
+            транспортом и среднетоннажными шасси; сложность и стоимость всегда согласуем до начала сварочных работ.
+        </p>
+        <div class="hero-buttons">
+            <a href="{% url 'services:service_list' %}" class="btn btn-primary">Каталог услуг</a>
+            <a href="{% url 'portfolio:portfolio_list' %}" class="btn btn-secondary">Примеры работ</a>
+            <a href="{% url 'contact_form' %}" class="btn btn-outline-light">Рассчитать и уточнить</a>
+        </div>
+    </div>
+</section>
+
+<section class="home-intro-grid section-tight">
+    <div class="container home-intro-inner">
+        <div class="home-intro-text">
+            <h2 class="section-title">Как мы выстраиваем работу</h2>
+            <p>
+                На практике большинство обращений связано с необходимостью увеличить длину базы под стандартный
+                или нестандартный фургон, восстановить несущую после перегруза или коррозии либо пройти техосмотр
+                после доработок. Мы не распыляемся на посторонние виды монтажа: вся производственная логистика,
+                закупка металла, фурнитуры кузова и расходников заточена именно под эти задачи.
+            </p>
+            <p>
+                Перед договором вы получаете понятное описание этапов, ориентировочные сроки и диапазон цены
+                «от» с пояснением, от чего зависит итог (объём металла, срочность, ночные смены, доставка
+                фургона и т.д.). Менеджер остаётся на связи на протяжении всего цикла — без «потерянных» заявок.
+            </p>
+        </div>
+        <figure class="home-intro-figure">
+            <img src="{% static 'img/proizvodstvennaya_zona.svg' %}" alt="" width="520" height="325" loading="lazy" decoding="async">
+            <figcaption class="muted">Иллюстрация производственной зоны (заглушка).</figcaption>
+        </figure>
+    </div>
+</section>
+
+<section class="home-key-services section-tight">
+    <div class="container">
+        <h2 class="section-title">Ключевые направления</h2>
+        <p class="section-subtitle">
+            В конструкторе на главной и в каталоге услуг доступны только эти четыре направления — без лишних позиций в прайсе.
+        </p>
+        <div class="key-services-grid">
+            <article class="key-service-card">
+                <img src="{% static 'img/udlinenie_ramy.svg' %}" alt="Удлинение рамы" loading="lazy">
+                <h3><a href="{% url 'services:service_list' %}">Удлинение рамы</a></h3>
+                <p>
+                    Проект усиления, вставки и распределение швов под будущую нагрузку. Ориентир по цене —
+                    <strong>от 100&nbsp;000 руб.</strong>, точная сумма после замеров и выбора схемы.
+                </p>
+            </article>
+            <article class="key-service-card">
+                <img src="{% static 'img/evrofurgon.svg' %}" alt="Еврофургон" loading="lazy">
+                <h3><a href="{% url 'services:service_list' %}">Еврофургон</a></h3>
+                <p>
+                    Кузов по согласованным габаритам, ворота, пол, вентиляция. Монтаж на подготовленное шасси.
+                    <strong>От 200&nbsp;000 руб.</strong> в зависимости от длины и комплектации.
+                </p>
+            </article>
+            <article class="key-service-card">
+                <img src="{% static 'img/tehosmotr.svg' %}" alt="Техосмотр" loading="lazy">
+                <h3><a href="{% url 'services:service_list' %}">Техосмотр</a></h3>
+                <p>
+                    Подготовка к линии диагностики: свет, тормоза, видимость номеров, типовые замечания.
+                    <strong>От 5&nbsp;000 руб.</strong> в зависимости от объёма доработок.
+                </p>
+            </article>
+            <article class="key-service-card">
+                <img src="{% static 'img/remont_ramy.svg' %}" alt="Ремонт рамы" loading="lazy">
+                <h3><a href="{% url 'services:service_list' %}">Ремонт рамы</a></h3>
+                <p>
+                    Диагностика трещин и коррозии, локальная замена металла, усиление узлов.
+                    <strong>От 20&nbsp;000 руб.</strong>; сложные случаи оцениваются отдельно.
+                </p>
+            </article>
+        </div>
+    </div>
+</section>
+
+<section class="home-solutions section-tight">
+    <div class="container">
+        <div class="section-head">
+            <h2 class="section-title">Готовые решения и примеры</h2>
+            <a href="{% url 'portfolio:portfolio_list' %}" class="text-link">Все работы →</a>
+        </div>
+        <p class="section-subtitle">
+            В карусели ниже — реальные проекты из портфолио (если они заведены в админке) и тематические заглушки
+            с пояснением ценового диапазона. Мы специализируемся на связке «рама + фургон», подготовке к ТО и
+            восстановлении несущей; именно эти темы вы увидите в описаниях карточек.
+        </p>
+        <div class="solutions-scroller" tabindex="0" aria-label="Примеры работ">
+            {% for item in ready_solutions %}
+            <a class="solution-card" href="{% if item.pk %}{% url 'portfolio:portfolio_detail' item.pk %}{% else %}{{ item.url }}{% endif %}">
+                <img src="{% if item.after_image %}{{ item.after_image.url }}{% elif item.before_image %}{{ item.before_image.url }}{% elif item.image_url %}{{ item.image_url }}{% else %}{% static 'img/zaglushka_portfolio_do_posle.svg' %}{% endif %}" alt="" loading="lazy">
+                <div class="solution-card-body">
+                    <h3>{{ item.title }}</h3>
+                    {% if item.price_display %}<span class="solution-price">{{ item.price_display }}</span>{% endif %}
+                </div>
+            </a>
+            {% empty %}
+            <p class="muted">Добавьте проекты в «Портфолио», чтобы заполнить карусель.</p>
+            {% endfor %}
+        </div>
+    </div>
+</section>
+
+<section class="advantages-block">
+    <div class="container">
+        <h2 class="section-title">Почему нам доверяют</h2>
+        <p class="section-subtitle section-subtitle--center">
+            Кратко о том, что отличает наш подход от разовых «гаражных» предложений без документов и гарантийной дисциплины.
+        </p>
+        <div class="advantages-grid">
+            <div class="advantage-item">
+                <i class="fas fa-users"></i>
+                <h3>Опыт мастеров</h3>
+                <p>
+                    Сварщики и сборщики работают с коммерческими шасси годами: знают типовые ошибки при удлинении,
+                    умеют предусмотреть запас прочности под ваш тип груза и дорожные условия Омска и области.
+                </p>
+            </div>
+            <div class="advantage-item">
+                <i class="fas fa-project-diagram"></i>
+                <h3>Большой объём проектов</h3>
+                <p>
+                    За годы работы накоплена база типовых решений и узлов — не начинаем «с чистого листа» там,
+                    где уже есть проверенная схема. Это ускоряет производство и снижает риск переделок.
+                </p>
+            </div>
+            <div class="advantage-item">
+                <i class="fas fa-shield-alt"></i>
+                <h3>Прозрачные сметы</h3>
+                <p>
+                    В смете закрепляем перечень работ и материалов; изменения сверх объёма согласуются письменно.
+                    Гарантийные обязательства по сварке и монтажу фиксируем в договоре и акте приёмки.
+                </p>
+            </div>
+            <div class="advantage-item">
+                <i class="fas fa-drafting-compass"></i>
+                <h3>Индивидуальный расчёт</h3>
+                <p>
+                    Даже в рамках четырёх услуг каждое шасси уникально: разная износостойкость металла, разная
+                    история ремонтов. Поэтому финальная цена и срок всегда привязаны к осмотру, а не к «среднему по больнице».
+                </p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section class="constructor-section">
+    <div class="container">
+        <h2 class="section-title">Конструктор комплектации</h2>
+        <p class="section-subtitle">
+            Соберите параметры так же, как на специализированных витринах по переоборудованию: класс шасси, тип работ,
+            приоритет по срокам и (для еврофургона) ориентир по длине кузова. Система выдаёт диапазон «от —
+            до» по нашим базовым расценкам; точная сумма возможна только после осмотра техники.
+        </p>
+        <div class="constructor-layout">
+            <div class="constructor-panel constructor-panel--form">
+                <form method="post" action="{% url 'core:index' %}" class="constructor-form contact-form">
+                    {% csrf_token %}
+                    {% for field in constructor_form %}
+                    <div class="form-group">
+                        <label for="{{ field.id_for_label }}">{{ field.label }}</label>
+                        {{ field }}
+                        {% if field.name == 'euro_body_length' %}
+                        <p class="field-hint muted">Если услуга не «Еврофургон», блок длины кузова игнорируется при расчёте.</p>
+                        {% endif %}
+                        {{ field.errors }}
+                    </div>
+                    {% endfor %}
+                    <button type="submit" name="submit" value="constructor" class="btn btn-primary btn-constructor-submit">Оценить конфигурацию</button>
+                </form>
+            </div>
+            <aside class="constructor-panel constructor-panel--summary">
+                <h3>Ваш расчёт</h3>
+                <p class="constructor-summary-lead muted">
+                    Ориентир формируется из прайса «от» для выбранного типа работ, коэффициентов по массе шасси
+                    и срочности, а для фургона — от выбранного диапазона длины кузова.
+                </p>
+                {% if estimated_cost is not None %}
+                <div class="constructor-result-card">
+                    <p class="constructor-result-sum">≈ {{ estimated_cost|floatformat:0 }} руб.</p>
+                    <p class="muted small-print">Примерное среднее в пределах нижней и верхней границы.</p>
+                    {% if constructor_summary %}
+                    <ul class="constructor-spec-list">
+                        <li><span>Шасси</span> {{ constructor_summary.chassis }}</li>
+                        <li><span>Работа</span> {% if selected_service %}{{ selected_service.name }}{% else %}{{ constructor_summary.service }}{% endif %}</li>
+                        <li><span>Сроки</span> {{ constructor_summary.workload }}</li>
+                        {% if constructor_summary.euro_body_label %}
+                        <li><span>Длина кузова</span> {{ constructor_summary.euro_body_label }}</li>
+                        {% endif %}
+                    </ul>
+                    {% endif %}
+                    <p class="muted small-print">Фактическая цена может отличаться от расчёта в зависимости от состояния рамы и объёма работ.</p>
+                </div>
+                {% else %}
+                <p class="muted">Выберите значения слева и нажмите «Оценить конфигурацию» — здесь появится диапазон стоимости.</p>
+                {% endif %}
+            </aside>
+        </div>
+
+        {% if estimated_cost is not None %}
+        <div class="cost-modal-overlay" id="cost-modal">
+            <div class="cost-modal-window">
+                <h3>Итоговая сумма закрепляется после осмотра</h3>
+                <p>Предварительный диапазон: от <strong>{{ estimated_cost_min }}</strong> до <strong>{{ estimated_cost_max }}</strong> руб.</p>
+                <p>
+                    Позвоните
+                    {% if site_settings and site_settings.main_phone %}
+                    <a href="tel:+79831138255">{{ site_settings.main_phone }}</a>
+                    {% endif %}
+                    {% if site_settings and site_settings.main_email %}
+                    или напишите на <a href="mailto:{{ site_settings.main_email }}">{{ site_settings.main_email }}</a>
+                    {% endif %} — согласуем выезд или приём машины на площадке.
+                </p>
+                <button type="button" class="btn btn-primary" id="close-cost-modal">Понятно</button>
+            </div>
+        </div>
+        {% endif %}
+    </div>
+</section>
+
+<section class="statistics-block">
+    <div class="container">
+        <h2 class="section-title">В цифрах</h2>
+        <p class="section-subtitle section-subtitle--center">
+            Показатели ниже задаются в админ-панели (раздел «Статистика») и отражают накопленный опыт компании.
+        </p>
+        <div class="stats-grid">
+            <div class="stat-item">
+                <h3>{% if statistics %}{{ statistics.projects_completed }}+{% else %}1000+{% endif %}</h3>
+                <p>Проектов</p>
+            </div>
+            <div class="stat-item">
+                <h3>{% if statistics %}{{ statistics.years_of_experience }}+{% else %}7+{% endif %}</h3>
+                <p>Лет на рынке</p>
+            </div>
+            <div class="stat-item">
+                <h3>{% if statistics %}{{ statistics.satisfied_clients_percentage }}%{% else %}97%{% endif %}</h3>
+                <p>Довольных клиентов</p>
+            </div>
+            <div class="stat-item">
+                <h3>{% if statistics %}{{ statistics.specialists_count }}+{% else %}15+{% endif %}</h3>
+                <p>Специалистов</p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section class="home-promotions section-tight">
+    <div class="container">
+        <div class="section-head">
+            <h2 class="section-title">Акции и бонусы</h2>
+            <a href="{% url 'promotions:promotion_list' %}" class="text-link">Все акции →</a>
+        </div>
+        <p class="section-subtitle">
+            Акции распространяются на услуги из нашего основного перечня. Условия участия и сроки проведения
+            всегда смотрите на странице конкретной акции — там же формы для отправки ссылок на отзывы.
+        </p>
+        <div class="promo-strip">
+            {% for p in active_promotions %}
+            <article class="promo-card">
+                <h3><a href="{{ p.get_absolute_url }}">{{ p.title }}</a></h3>
+                {% if p.bonus_summary %}<p class="promo-bonus">{{ p.bonus_summary }}</p>{% endif %}
+                <p>{{ p.teaser|default:p.description|truncatewords:24 }}</p>
+                <a href="{{ p.get_absolute_url }}" class="btn btn-primary btn-sm">Условия и участие</a>
+            </article>
+            {% empty %}
+            <p class="muted">Активные акции появятся здесь после добавления в разделе «Акции и бонусы».</p>
+            {% endfor %}
+        </div>
+    </div>
+</section>
+
+<section class="home-reviews section-tight">
+    <div class="container">
+        <div class="section-head">
+            <h2 class="section-title">Отзывы клиентов</h2>
+            <a href="{% url 'reviews:review_list' %}" class="text-link">Все отзывы →</a>
+        </div>
+        <p class="section-subtitle">
+            Новые отзывы проходят модерацию: на сайте остаются только опубликованные материалы. При отправке отзыва
+            выберите один из четырёх типов работ — так другим посетителям проще найти релевантный опыт.
+        </p>
+        <div class="reviews-grid reviews-grid--compact">
+            {% for review in featured_reviews %}
+            <div class="review-card">
+                <div class="author-info">
+                    <div class="avatar"><i class="fas fa-user-circle" aria-hidden="true"></i></div>
+                    <div class="details">
+                        <h3>{{ review.author_name }}</h3>
+                        <p class="review-service-type">{{ review.get_service_type_display }}</p>
+                    </div>
+                </div>
+                <div class="rating" aria-label="Оценка {{ review.rating }} из 5">
+                    {% for i in "12345"|make_list %}
+                        {% if forloop.counter <= review.rating %}
+                            <i class="fas fa-star" aria-hidden="true"></i>
+                        {% else %}
+                            <i class="far fa-star" aria-hidden="true"></i>
+                        {% endif %}
+                    {% endfor %}
+                </div>
+                <p class="review-text">{{ review.text|truncatewords:36 }}</p>
+                <p class="review-date">{{ review.created_at|date:"d.m.Y" }}</p>
+            </div>
+            {% empty %}
+            <p class="muted">Опубликуйте отзывы в админке, чтобы показать их на главной.</p>
+            {% endfor %}
+        </div>
+    </div>
+</section>
+
+<section class="home-quick-contact section-tight">
+    <div class="container">
+        <h2 class="section-title">Быстрое обращение</h2>
+        <p class="section-subtitle">
+            Короткая форма для первичного контакта: укажите, какая из четырёх услуг вас интересует, марку шасси
+            и телефон. В комментарии можно добавить желаемые сроки, город стоянки техники или ссылку на фото
+            дефекта рамы — это ускорит предварительную оценку до звонка менеджера.
+        </p>
+        <form method="post" action="{% url 'core:index' %}" class="quick-contact-form contact-form">
+            {% csrf_token %}
+            {{ quick_form.non_field_errors }}
+            {% for field in quick_form %}
+            <div class="form-group">
+                <label for="{{ field.id_for_label }}">{{ field.label }}</label>
+                {{ field }}
+                {{ field.errors }}
+            </div>
+            {% endfor %}
+            <button type="submit" name="submit" value="quick" class="btn btn-primary">Отправить</button>
+        </form>
+    </div>
+</section>
+
+<section class="cta-block">
+    <div class="container cta-inner">
+        <h2>Нужен расчёт или осмотр техники?</h2>
+        <p>
+            На странице контактов — полная форма заявки с выбором услуги из четырёх позиций, адрес производства
+            на карте и реквизиты для юридических лиц. Если не уверены, с чего начать, приложите фото и VIN
+            в сообщении — подскажем оптимальный порядок работ.
+        </p>
+        <div class="cta-actions">
+            <a href="{% url 'contact_form' %}" class="btn btn-lg btn-primary">Контакты и заявка</a>
+            {% if site_settings and site_settings.main_phone %}
+            <a href="tel:{{ site_settings.main_phone }}" class="btn btn-lg btn-outline-light">Позвонить</a>
+            {% endif %}
+        </div>
+    </div>
+</section>
+{% endblock %}

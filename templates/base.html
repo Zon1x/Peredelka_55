@@ -1,0 +1,135 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="ru">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}{% if site_settings %}{{ site_settings.default_meta_title }}{% else %}Peredelka55{% endif %}{% endblock %}</title>
+    <meta name="description"
+        content="{% block meta_description %}{% if site_settings %}{{ site_settings.default_meta_description }}{% else %}Омск: удлинение рамы, еврофургон, подготовка к техосмотру, ремонт рамы грузового транспорта.{% endif %}{% endblock %}">
+    <meta name="keywords"
+        content="{% if site_settings %}{{ site_settings.keywords }}{% else %}удлинение рамы, еврофургон, техосмотр, ремонт рамы, Омск{% endif %}">
+
+    <meta property="og:title"
+        content="{% if site_settings and site_settings.og_title %}{{ site_settings.og_title }}{% else %}{% block og_title %}{% if site_settings %}{{ site_settings.default_meta_title }}{% endif %}{% endblock %}{% endif %}">
+    <meta property="og:description"
+        content="{% if site_settings and site_settings.og_description %}{{ site_settings.og_description }}{% else %}{% block og_description %}{% if site_settings %}{{ site_settings.default_meta_description }}{% endif %}{% endblock %}{% endif %}">
+    <meta property="og:image"
+        content="{% if site_settings and site_settings.og_image %}{{ request.scheme }}://{{ request.get_host }}{{ site_settings.og_image.url }}{% endif %}">
+    <meta property="og:url" content="{{ request.build_absolute_uri }}">
+    <meta property="og:type" content="website">
+
+    <link rel="icon" type="image/svg+xml" href="{% static 'img/ikonka_brauzera.svg' %}?v={{ ASSET_VERSION }}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"
+        crossorigin="anonymous" referrerpolicy="no-referrer">
+    <link rel="stylesheet" href="{% static 'css/style.css' %}?v={{ ASSET_VERSION }}">
+    {% block extra_css %}{% endblock %}
+</head>
+
+<body>
+    <a class="skip-link" href="#main">К содержимому</a>
+    <div class="nav-backdrop" id="nav-backdrop" hidden aria-hidden="true"></div>
+
+    <header class="site-header">
+        <div class="container header-inner">
+            <a href="{% url 'core:index' %}" class="logo" aria-label="{% if site_settings %}{{ site_settings.site_name }}{% else %}Peredelka55{% endif %} — на главную">
+                <img class="logo-img" src="{% static 'img/logo_kompanii.svg' %}?v={{ ASSET_VERSION }}" width="168" height="34" alt="">
+            </a>
+
+            <button type="button" class="nav-toggle" id="nav-toggle" aria-controls="site-nav" aria-expanded="false"
+                aria-label="Открыть меню">
+                <span class="nav-toggle-bar" aria-hidden="true"></span>
+                <span class="nav-toggle-bar" aria-hidden="true"></span>
+                <span class="nav-toggle-bar" aria-hidden="true"></span>
+            </button>
+
+            <nav class="site-nav" id="site-nav" aria-label="Основное меню">
+                <ul class="nav-list">
+                    <li><a class="nav-link" href="{% url 'core:index' %}">Главная</a></li>
+                    <li><a class="nav-link" href="{% url 'core:about' %}">О компании</a></li>
+                    <li><a class="nav-link" href="{% url 'services:service_list' %}">Услуги</a></li>
+                    <li><a class="nav-link" href="{% url 'portfolio:portfolio_list' %}">Наши работы</a></li>
+                    <li><a class="nav-link" href="{% url 'reviews:review_list' %}">Отзывы</a></li>
+                    <li><a class="nav-link" href="{% url 'promotions:promotion_list' %}">Акции</a></li>
+                    <li><a class="nav-link" href="{% url 'contact_form' %}">Контакты</a></li>
+                </ul>
+            </nav>
+
+            <div class="header-actions">
+                {% if site_settings and site_settings.main_phone %}
+                <a class="header-phone" href="tel:+79831138255">
+                    <i class="fas fa-phone-alt" aria-hidden="true"></i>
+                    <span>{{ site_settings.main_phone }}</span>
+                </a>
+                {% endif %}
+                <a class="btn btn-primary btn-sm header-cta" href="{% url 'contact_form' %}">Заявка</a>
+            </div>
+        </div>
+    </header>
+
+    <main id="main">
+        {% if messages %}
+        <div class="container site-messages" role="status">
+            <ul class="messages">
+                {% for message in messages %}
+                <li class="{{ message.tags }}">{{ message }}</li>
+                {% endfor %}
+            </ul>
+        </div>
+        {% endif %}
+        {% block content %}{% endblock %}
+    </main>
+
+    <footer class="site-footer">
+        <div class="container footer-grid">
+            <div class="footer-brand">
+                <strong>{% if site_settings %}{{ site_settings.company_name|default:site_settings.site_name }}{% else %}Peredelka55{% endif %}</strong>
+                <p class="footer-tagline">Удлинение рамы, еврофургон, техосмотр, ремонт рамы — Омск</p>
+                {% if site_settings %}
+                <div class="footer-contact-lines">
+                    {% if site_settings.main_phone %}
+                    <a class="footer-contact-link" href="tel:+79831138255"><i class="fas fa-phone-alt" aria-hidden="true"></i> {{ site_settings.main_phone }}</a>
+                    {% endif %}
+                    {% if site_settings.main_email %}
+                    <a class="footer-contact-link" href="mailto:{{ site_settings.main_email }}"><i class="fas fa-envelope" aria-hidden="true"></i> {{ site_settings.main_email }}</a>
+                    {% endif %}
+                    {% if site_settings.address %}
+                    <span class="footer-contact-text"><i class="fas fa-map-marker-alt" aria-hidden="true"></i> {{ site_settings.address }}</span>
+                    {% endif %}
+                </div>
+                {% endif %}
+            </div>
+            <div class="footer-nav-cols" aria-label="Нижнее меню">
+                <nav class="footer-nav footer-nav--left">
+                    <a href="{% url 'core:about' %}">О компании</a>
+                    <a href="{% url 'services:service_list' %}">Услуги</a>
+                    <a href="{% url 'portfolio:portfolio_list' %}">Наши работы</a>
+                </nav>
+                <nav class="footer-nav footer-nav--right">
+                    <a href="{% url 'reviews:review_list' %}">Отзывы</a>
+                    <a href="{% url 'promotions:promotion_list' %}">Акции</a>
+                    <a href="{% url 'contact_form' %}">Контакты</a>
+                </nav>
+            </div>
+            <div class="footer-meta">
+                {% if site_settings and site_settings.show_social_icons %}
+                <div class="social-icons">
+                    {% if site_settings.vk_link %}<a href="{{ site_settings.vk_link }}" target="_blank" rel="noopener noreferrer" aria-label="ВКонтакте"><i class="fab fa-vk"></i></a>{% endif %}
+                    {% if site_settings.telegram_link %}<a href="{{ site_settings.telegram_link }}" target="_blank" rel="noopener noreferrer" aria-label="Telegram"><i class="fab fa-telegram-plane"></i></a>{% endif %}
+                    {% if site_settings.whatsapp_link %}<a href="{{ site_settings.whatsapp_link }}" target="_blank" rel="noopener noreferrer" aria-label="WhatsApp"><i class="fab fa-whatsapp"></i></a>{% endif %}
+                </div>
+                {% endif %}
+            </div>
+        </div>
+        <p class="footer-copy">&copy; {% now "Y" %} {% if site_settings %}{{ site_settings.site_name }}{% else %}Peredelka55{% endif %}</p>
+    </footer>
+    <button type="button" class="scroll-top" id="scroll-top" aria-label="Наверх">
+        <i class="fas fa-arrow-up" aria-hidden="true"></i>
+    </button>
+
+    <script src="{% static 'js/script.js' %}?v={{ ASSET_VERSION }}" defer></script>
+    {% block extra_js %}{% endblock %}
+</body>
+
+</html>

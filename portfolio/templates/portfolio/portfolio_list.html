@@ -1,0 +1,50 @@
+{% extends 'base.html' %}
+
+{% block title %}Наши работы{% endblock %}
+
+{% block content %}
+<div class="container my-5">
+    <h1 class="text-center mb-4">Наши работы</h1>
+
+    <div class="row mb-4">
+        <div class="col-md-3">
+            <h3>Категории техники</h3>
+            <div class="list-group">
+                <a href="{% url 'portfolio:portfolio_list' %}"
+                    class="list-group-item list-group-item-action {% if not selected_category %}active{% endif %}">
+                    Все проекты
+                </a>
+                {% for category in categories %}
+                <a href="{% url 'portfolio:portfolio_list' %}?category={{ category }}"
+                    class="list-group-item list-group-item-action {% if selected_category == category %}active{% endif %}">
+                    {{ category }}
+                </a>
+                {% endfor %}
+            </div>
+        </div>
+        <div class="col-md-9">
+            <div class="row">
+                {% for item in portfolio_items %}
+                <div class="col-md-6 mb-4">
+                    <div class="card h-100">
+                        {% if item.before_image %}
+                        <img src="{{ item.before_image.url }}" class="card-img-top" alt="{{ item.title }} - До">
+                        {% endif %}
+                        <div class="card-body">
+                            <h5 class="card-title">{{ item.title }}</h5>
+                            <p class="card-text">{{ item.description|truncatechars:100 }}</p>
+                            <a href="{% url 'portfolio:portfolio_detail' pk=item.pk %}"
+                                class="btn btn-primary">Подробнее</a>
+                        </div>
+                    </div>
+                </div>
+                {% empty %}
+                <div class="col-12">
+                    <p>Проекты не найдены.</p>
+                </div>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

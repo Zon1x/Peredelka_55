@@ -1,0 +1,109 @@
+{% extends 'base.html' %}
+
+{% block title %}Контакты{% if site_settings %} | {{ site_settings.site_name }}{% endif %}{% endblock %}
+{% block meta_description %}Телефон, email и заявка: удлинение рамы, еврофургон, техосмотр, ремонт рамы в Омске.{% endblock %}
+
+{% block content %}
+<div class="container contact-page">
+    <div class="page-header contact-page-intro">
+        <h1>Связь с нами</h1>
+        <p class="page-intro contact-page-intro-lead">
+            Компания специализируется на четырёх направлениях. Ниже — телефон, почта и адрес для приезда или осмотра;
+            справа в той же сетке — форма для заявки. Ответ по рабочим дням, при необходимости назначим выезд.
+        </p>
+    </div>
+
+    <div class="contact-dual-heading">
+        <div class="contact-dual-heading__cell">
+            <h2 class="contact-dual-heading__title">Контакты</h2>
+            <p class="contact-dual-heading__lead">
+                Здесь указаны телефон <strong>+7 (983) 113-82-55</strong>, адрес производства или приёма заявок,
+                режим работы и электронная почта. Юридическое лицо на странице указано без расшифровки банковских
+                реквизитов — только строка наименования индивидуального предпринимателя.
+            </p>
+        </div>
+        <div class="contact-dual-heading__cell">
+            <h2 class="contact-dual-heading__title">Форма обратной связи</h2>
+            <p class="contact-dual-heading__lead">
+                Выберите услугу из четырёх направлений, оставьте телефон и при необходимости опишите шасси, сроки
+                и дефект. Ответ мы направляем в рабочее время; ориентир по цене даёт конструктор на главной странице,
+                а фиксируем сумму только после осмотра или получения ваших материалов.
+            </p>
+        </div>
+    </div>
+
+    <div class="contact-top-row">
+        <div class="contact-details">
+            {% if site_settings %}
+                <p><strong>Телефон:</strong> <a href="tel:+79831138255">{{ site_settings.main_phone }}</a></p>
+                {% if site_settings.additional_phone %}
+                    <p><strong>Дополнительный телефон:</strong> <a href="tel:{{ site_settings.additional_phone }}">{{ site_settings.additional_phone }}</a></p>
+                {% endif %}
+                <p><strong>Email:</strong> <a href="mailto:{{ site_settings.main_email }}">{{ site_settings.main_email }}</a></p>
+                {% if site_settings.additional_email %}
+                    <p><strong>Дополнительный email:</strong> <a href="mailto:{{ site_settings.additional_email }}">{{ site_settings.additional_email }}</a></p>
+                {% endif %}
+                {% if site_settings.address %}
+                    <p><strong>Адрес:</strong> {{ site_settings.address }}</p>
+                {% endif %}
+                <p><strong>Время работы:</strong> {{ site_settings.working_hours }}</p>
+            {% endif %}
+            <div class="company-requisites company-requisites--minimal">
+                <h3 class="company-requisites__title">Реквизиты</h3>
+                {% if site_settings %}
+                    <p class="company-requisites__single">{{ site_settings.company_legal_name }}</p>
+                {% endif %}
+            </div>
+        </div>
+        <div class="contact-form-block contact-form-block--inline">
+            <form method="post" class="contact-form contact-form--in-column">
+                {% csrf_token %}
+                {{ form.non_field_errors }}
+                <div class="form-group">
+                    <label for="{{ form.name.id_for_label }}">Ваше имя:</label>
+                    {{ form.name }}
+                    {{ form.name.errors }}
+                </div>
+                <div class="form-group">
+                    <label for="{{ form.vehicle_type.id_for_label }}">Тип авто / задача:</label>
+                    {{ form.vehicle_type }}
+                    {{ form.vehicle_type.errors }}
+                </div>
+                <div class="form-group">
+                    <label for="{{ form.phone.id_for_label }}">Номер телефона:</label>
+                    {{ form.phone }}
+                    {{ form.phone.errors }}
+                </div>
+                <div class="form-group">
+                    <label for="{{ form.email.id_for_label }}">Email:</label>
+                    {{ form.email }}
+                    {{ form.email.errors }}
+                </div>
+                <div class="form-group">
+                    <label for="{{ form.service.id_for_label }}">Услуга:</label>
+                    {{ form.service }}
+                    {{ form.service.errors }}
+                </div>
+                <div class="form-group">
+                    <label for="{{ form.message.id_for_label }}">Сообщение:</label>
+                    {{ form.message }}
+                    {{ form.message.errors }}
+                </div>
+                <button type="submit" class="btn btn-primary">Отправить заявку</button>
+            </form>
+        </div>
+    </div>
+
+    <div class="contact-map-block">
+        {% if site_settings %}
+            {% with map_query=site_settings.address|default:"г. Омск, ул. Рельсовая, д. 25" %}
+                <iframe title="Карта проезда — {{ map_query }}" src="https://yandex.ru/map-widget/v1/?text={{ map_query|urlencode }}" width="100%" height="400" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+                <p class="map-external-link"><a href="https://yandex.ru/maps/?text={{ map_query|urlencode }}" target="_blank" rel="noopener noreferrer">Открыть адрес в Яндекс.Картах</a></p>
+            {% endwith %}
+        {% else %}
+                <iframe title="Карта — Омск" src="https://yandex.ru/map-widget/v1/?text=%D0%B3.%20%D0%9E%D0%BC%D1%81%D0%BA" width="100%" height="400" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+                <p class="map-external-link"><a href="https://yandex.ru/maps/?text=%D0%B3.%20%D0%9E%D0%BC%D1%81%D0%BA" target="_blank" rel="noopener noreferrer">Открыть в Яндекс.Картах</a></p>
+        {% endif %}
+    </div>
+</div>
+{% endblock %}
