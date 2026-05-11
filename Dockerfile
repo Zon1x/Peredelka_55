@@ -26,4 +26,4 @@ EXPOSE 8000
 
 # sh: чтобы bind-mount с Windows не требовал executable bit у entrypoint.sh
 ENTRYPOINT ["sh", "/app/docker/entrypoint.sh"]
-CMD ["gunicorn", "Peredelka55.wsgi:application", "--bind", "0.0.0.0:8000", "--workers", "3"]
+CMD ["sh", "-c", "gunicorn Peredelka55.wsgi:application --bind 0.0.0.0:${PORT:-8000} --workers ${GUNICORN_WORKERS:-3}"]
