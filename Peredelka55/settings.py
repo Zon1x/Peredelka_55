@@ -17,6 +17,8 @@ from dotenv import load_dotenv
 
 load_dotenv()
 
+IS_VERCEL = os.getenv('VERCEL', '').lower() in ('1', 'true')
+
 TESTING = len(sys.argv) > 1 and sys.argv[1] == 'test'
 
 
@@ -37,6 +39,8 @@ SECRET_KEY = os.getenv('SECRET_KEY', 'django-insecure-bo#-x8k#hslh3n4)nbkbl&+#+x
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = os.getenv('DJANGO_DEBUG', 'True').lower() == 'true'
+if IS_VERCEL:
+    DEBUG = os.getenv('DJANGO_DEBUG', 'False').lower() == 'true'
 
 # Смените при обновлении CSS/JS (или задайте в .env). Скрипт scripts/run-dev.ps1 подставляет время.
 ASSET_VERSION = os.getenv('ASSET_VERSION', '6')
@@ -44,6 +48,8 @@ ASSET_VERSION = os.getenv('ASSET_VERSION', '6')
 SITE_NAME = os.getenv('SITE_NAME', 'Peredelka55')
 
 ALLOWED_HOSTS = _env_csv('ALLOWED_HOSTS', 'localhost,127.0.0.1')
+if IS_VERCEL and '.vercel.app' not in ALLOWED_HOSTS:
+    ALLOWED_HOSTS.append('.vercel.app')
 CSRF_TRUSTED_ORIGINS = _env_csv(
     'CSRF_TRUSTED_ORIGINS',
     'http://127.0.0.1,http://localhost:8000,http://127.0.0.1:8000',
@@ -72,7 +78,7 @@ INSTALLED_APPS = [
     'promotions',
 ]
 
-if DEBUG and not TESTING:
+if DEBUG and not TESTING and not IS_VERCEL:
     INSTALLED_APPS.insert(0, 'debug_toolbar')
 
 MIDDLEWARE = [
@@ -86,7 +92,7 @@ MIDDLEWARE = [
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
 
-if DEBUG and not TESTING:
+if DEBUG and not TESTING and not IS_VERCEL:
     MIDDLEWARE.append('core.middleware.NoCacheHtmlInDebugMiddleware')
     MIDDLEWARE.append('debug_toolbar.middleware.DebugToolbarMiddleware')
 
@@ -221,16 +227,25 @@ DEBUG_TOOLBAR_CONFIG = {
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 # Caching
-CACHES = {
-    "default": {
-        "BACKEND": "django_redis.cache.RedisCache",
-        "LOCATION": os.getenv('REDIS_URL', "redis://127.0.0.1:6379/1"),
-        "OPTIONS": {
-            "CLIENT_CLASS": "django_redis.client.DefaultClient",
-        },
-        "KEY_PREFIX": "peredelka55",
+if os.getenv('REDIS_URL'):
+    CACHES = {
+        "default": {
+            "BACKEND": "django_redis.cache.RedisCache",
+            "LOCATION": os.getenv('REDIS_URL'),
+            "OPTIONS": {
+                "CLIENT_CLASS": "django_redis.client.DefaultClient",
+            },
+            "KEY_PREFIX": "peredelka55",
+        }
     }
-}
+else:
+    # Без REDIS_URL (в т.ч. на тестовом деплое Vercel) используем безопасный локальный кэш.
+    CACHES = {
+        "default": {
+            "BACKEND": "django.core.cache.backends.locmem.LocMemCache",
+            "LOCATION": "peredelka55-local-cache",
+        }
+    }
 
 # Email Settings
 EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
